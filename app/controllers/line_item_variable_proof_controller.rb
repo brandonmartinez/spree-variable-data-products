@@ -1,0 +1,2 @@
+class LineItemVariableProofController < ApplicationController
+end

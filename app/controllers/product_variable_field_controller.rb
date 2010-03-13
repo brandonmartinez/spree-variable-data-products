@@ -1,0 +1,2 @@
+class ProductVariableFieldController < ApplicationController
+end
