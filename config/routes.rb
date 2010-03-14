@@ -10,4 +10,6 @@ map.namespace :admin do |admin|
   end
 end
 
-#map.resources :line_item_variable_proofs
+map.resources :orders do |order|
+  order.resources :line_items, :member => {:render_proof => :get}
+end

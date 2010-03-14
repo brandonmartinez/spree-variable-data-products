@@ -10,6 +10,7 @@ class VariableDataProductsExtension < Spree::Extension
 
   def self.require_gems(config)
     config.gem "rjb"
+    config.gem "radius"
   end
   
   def activate
@@ -54,7 +55,7 @@ class VariableDataProductsExtension < Spree::Extension
       def add_variant(variant, variable_fields, quantity=1)
         current_item = contains?(variant)
         
-        if current_item && current_item.line_item_variable_fields == nil # only allow updating when it's not a variable order
+        if current_item && current_item.line_item_variable_fields.empty? # only allow updating when it's not a variable order
           current_item.increment_quantity unless quantity > 1
           current_item.quantity = (current_item.quantity + quantity) if quantity > 1
           current_item.save
@@ -62,7 +63,7 @@ class VariableDataProductsExtension < Spree::Extension
           current_item = LineItem.new(:quantity => quantity)
           
           # check to see if it's a variable item, and if so, add the fields to the line item
-          if variable_fields.count != 0
+          if variable_fields != nil
             for field in variable_fields
               current_item.line_item_variable_fields << field
             end
@@ -92,12 +93,16 @@ class VariableDataProductsExtension < Spree::Extension
       create.after do
         variable_fields = []
         
-        for vfield in params[:variable_fields]
-          li = LineItemVariableField.new();
-          li.product_variable_field_id = vfield[0]
-          li.value = vfield[1]
+        if params[:variable_fields] != nil
+          for vfield in params[:variable_fields]
+            li = LineItemVariableField.new();
+            li.product_variable_field_id = vfield[0]
+            li.value = vfield[1]
           
-          variable_fields << li
+            variable_fields << li
+          end
+        else
+          variable_fields = nil
         end
         
         params[:products].each do |product_id,variant_id|
@@ -115,6 +120,12 @@ class VariableDataProductsExtension < Spree::Extension
 
         # store order token in the session
         session[:order_token] = @order.token
+      end
+    end
+    
+    LineItemsController.class_eval do
+      def render_proof
+        #render proof, use iText
       end
     end
 
