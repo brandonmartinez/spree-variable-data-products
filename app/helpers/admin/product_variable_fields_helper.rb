@@ -1,0 +1,2 @@
+module Admin::ProductVariableFieldsHelper
+end

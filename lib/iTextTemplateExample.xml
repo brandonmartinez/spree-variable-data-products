@@ -1,0 +1,31 @@
+<i:template>
+	<i:styles>
+		<i:style name="default" c="0" m="0" y="0" k="100" spot="false" fontname="Melior" fontsize="8" fontleading="9.6" />
+		<i:style name="defaultbold" c="0" m="0" y="0" k="100" spot="false" fontname="Melior Bold" fontsize="8" fontleading="9.6" />
+		<i:style name="school" c="0" m="0" y="0" k="100" spot="false" fontname="Avenir" fontsize="8" fontleading="9.6" />
+	</i:styles>
+	<i:page width="3.5" height="2" pdf="pdftemplates/bc.pdf">
+		<i:textblock x="0.7477" y="1.5556" style="school">
+			<i:textline>SCHOOL, REGIONAL CAMPUS OR ENTITY</i:textline>
+		</i:textblock>
+		<i:textblock x="0.7477" y="1.25" style="default">
+			<i:textline style="name">Full Name</i:textline>
+			<i:textline style="title">Title</i:textline>
+			<i:blankline />
+			<i:textline>Department or Office</i:textline>
+			<i:textline>Street Address</i:textline>
+			<i:textline>City or Town, MI 00000-0000</i:textline>
+			<i:styleline>
+				<i:span style="defaultbold">Phone:</i:span>
+				<i:span style="default"> (000) 000-0000 | </i:span>
+				<i:span style="defaultbold">Fax:</i:span>
+				<i:span style="default"> (000) 000-0000</i:span>
+			</i:styleline>
+			<i:styleline>
+				<i:span style="defaultbold">Email:</i:span>
+				<i:span style="default"> name@ferris.edu | </i:span><i:span style="defaultbold">Web:</i:span>
+				<i:span style="default"> www.ferris.edu</i:span>
+			</i:styleline>
+		</i:textblock>
+	</i:page>
+</i:template>
