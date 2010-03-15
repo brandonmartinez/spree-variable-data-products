@@ -15,7 +15,7 @@
 		<strong><%= t('variable-data-line-item') %></strong>
 		<br />
 		<% for field in line_item.line_item_variable_fields %>
-			<strong><%= field.product_variable_field.name%></strong> <%= field.value %><br />
+			<strong><%= field.product_variable_field.display_name%></strong> <%= field.value %><br />
 		<% end %>
 		
 		<%= link_to t("variable-data-generate-preview"), render_proof_order_line_item_url(@order.id, line_item.id) %>

@@ -1,49 +1,44 @@
+require 'rubygems'
 require 'rjb'
 require 'radius'
 
 class PdfGenerator
-  attr_accessor :template, :fields
+  # import classes
+  Rjb::load(File.join(File.dirname(__FILE__), 'iText.jar'), ['-Djava.awt.headless=true'])
+  FileOutputStream = Rjb::import('java.io.FileOutputStream')
+  BaseColor = Rjb::import('com.itextpdf.text.BaseColor')
+  CMYKColor = Rjb::import('com.itextpdf.text.pdf.CMYKColor')
+  Rectangle = Rjb::import('com.itextpdf.text.Rectangle')
+  Element = Rjb::import('com.itextpdf.text.Element')
+  Document = Rjb::import('com.itextpdf.text.Document')
+  Font = Rjb::import('com.itextpdf.text.Font')
+  FontFactory = Rjb::import('com.itextpdf.text.FontFactory')
+  PageSize = Rjb::import('com.itextpdf.text.PageSize')
+  Paragraph = Rjb::import('com.itextpdf.text.Paragraph')
+  Phrase = Rjb::import('com.itextpdf.text.Phrase')
+  BaseFont = Rjb::import('com.itextpdf.text.pdf.BaseFont')
+  ColumnText = Rjb::import('com.itextpdf.text.pdf.ColumnText')
+  PdfPageEvent = Rjb::import('com.itextpdf.text.pdf.PdfPageEvent')
+  PdfPCell = Rjb::import('com.itextpdf.text.pdf.PdfPCell')
+  PdfContentByte = Rjb::import('com.itextpdf.text.pdf.PdfContentByte')
+  PdfPTable = Rjb::import('com.itextpdf.text.pdf.PdfPTable')
+  PdfWriter = Rjb::import('com.itextpdf.text.pdf.PdfWriter')
+  PdfReader = Rjb::import('com.itextpdf.text.pdf.PdfReader')
   
-  # Setup the PdfGenerator
-  def initialize(template, fields)
-    # Load the iText library
-    options = ['-Djava.awt.headless=true']
-    Rjb::load('iText.jar', options)
-    
-    # Import classes
-    FileOutputStream = Rjb::import('java.io.FileOutputStream')
-    BaseColor = Rjb::import('com.itextpdf.text.BaseColor')
-    CMYKColor = Rjb::import('com.itextpdf.text.pdf.CMYKColor')
-    Rectangle = Rjb::import('com.itextpdf.text.Rectangle')
-    Element = Rjb::import('com.itextpdf.text.Element')
-    Document = Rjb::import('com.itextpdf.text.Document')
-    Font = Rjb::import('com.itextpdf.text.Font')
-    FontFactory = Rjb::import('com.itextpdf.text.FontFactory')
-    PageSize = Rjb::import('com.itextpdf.text.PageSize')
-    Paragraph = Rjb::import('com.itextpdf.text.Paragraph')
-    Phrase = Rjb::import('com.itextpdf.text.Phrase')
-    BaseFont = Rjb::import('com.itextpdf.text.pdf.BaseFont')
-    ColumnText = Rjb::import('com.itextpdf.text.pdf.ColumnText')
-    PdfPageEvent = Rjb::import('com.itextpdf.text.pdf.PdfPageEvent')
-    PdfPCell = Rjb::import('com.itextpdf.text.pdf.PdfPCell')
-    PdfContentByte = Rjb::import('com.itextpdf.text.pdf.PdfContentByte')
-    PdfPTable = Rjb::import('com.itextpdf.text.pdf.PdfPTable')
-    PdfWriter = Rjb::import('com.itextpdf.text.pdf.PdfWriter')
-    PdfReader = Rjb::import('com.itextpdf.text.pdf.PdfReader')
-    
+  public
+  
+  def render_pdf_proof(template, fields, output_path)
     #FontFactory.registerDirectory('/Library/Fonts/')
     #FontFactory.registerDirectory('/System/Library/Fonts/')
-    FontFactory.registerDirectory(File.join(RAILS_ROOT, 'lib/fonts') #font should be located here
+    FontFactory.registerDirectory(File.join(RAILS_ROOT, 'lib/fonts')) #fonts should be located here
     
-    # assign the template
-    :template = template
-    
-    # assign the fields
-    :fields = fields
-  end
-  
-  def render(output_path)
     context = Radius::Context.new do |c|
+      c.define_tag "var" do |tag|
+        content = fields[tag.attr['name']]
+        content
+      end
+      
+      
       c.define_tag "template" do |tag|
         # initialize anything needed for the template
         tag.locals.doc = Document.new()
@@ -87,7 +82,7 @@ class PdfGenerator
         tag.locals.doc.open()
 
         unless(pdftemplate.nil?)
-          reader = PdfReader.new(pdftemplate)
+          reader = PdfReader.new(File.join(RAILS_ROOT, 'lib', pdftemplate))
           cb = tag.locals.writer.getDirectContent()
           template = tag.locals.writer.getImportedPage(reader, 1)
           cb.addTemplate(template, 0, 0)
@@ -151,9 +146,6 @@ class PdfGenerator
 
     # Setup the parser
     parser = Radius::Parser.new(context, :tag_prefix => 'i')
-    parser.parse(:template)
+    parser.parse(template)
   end
-  
-  private
-
 end

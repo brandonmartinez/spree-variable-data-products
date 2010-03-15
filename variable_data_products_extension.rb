@@ -1,6 +1,8 @@
 # Uncomment this if you reference any of your controllers in activate
 # require_dependency 'application'
 
+require 'lib/PdfGenerator'
+
 class VariableDataProductsExtension < Spree::Extension
   version "1.0"
   description "Adds the ability to create web-to-print and variable data items in Spree by using iText. WORK IN PROGRESS"
@@ -50,6 +52,8 @@ class VariableDataProductsExtension < Spree::Extension
     Variant.class_eval do
       has_many :product_variable_fields, :through => :product
     end
+    
+    Variant.additional_fields += [ {:name => 'Template', :only => [:product]}  ]
     
     Order.class_eval do
       def add_variant(variant, variable_fields, quantity=1)
@@ -125,7 +129,26 @@ class VariableDataProductsExtension < Spree::Extension
     
     LineItemsController.class_eval do
       def render_proof
-        #render proof, use iText
+        li = LineItem.find(params[:id])
+        fields = {}
+        
+        # create fields hash that contains variable data to merge
+        for field in li.line_item_variable_fields
+          fields[field.product_variable_field.name] = field.value
+        end
+        
+        # Setup the output path
+        output_path = File.join(RAILS_ROOT, "lib/pdfproofs", ("proof-order-" + params[:order_id] + "-li-" + params[:id] + ".pdf"))
+        
+        # Create the PdfGenerator and render the proof
+        pdf = PdfGenerator.new()
+        pdf.render_pdf_proof(li.product.template, fields, output_path)
+        
+        # Send the file to the browser
+        render :file => output_path, :content_type => 'application/pdf'
+        
+        # Remove proof from file system; don't need them lingering around
+        File.delete(output_path) 
       end
     end
 

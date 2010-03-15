@@ -1,10 +1,10 @@
 <% number ||= 0 %>
 <tr class="product_variable_field">
   <td>
-    <%= f.text_field :name %>  
+    <%= f.text_field :display_name %>  
   </td>
   <td>
-    <%= f.text_area :description %>
+    <%= f.text_field :name %>
 	</td>
   <td>
   	<a href='#' onclick="$(this).up('.product_variable_field').remove();" class="iconlink"><%= icon('delete') %> <%= t("remove") %></a>

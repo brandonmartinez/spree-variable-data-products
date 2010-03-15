@@ -4,27 +4,28 @@
 		<i:style name="defaultbold" c="0" m="0" y="0" k="100" spot="false" fontname="Melior Bold" fontsize="8" fontleading="9.6" />
 		<i:style name="school" c="0" m="0" y="0" k="100" spot="false" fontname="Avenir" fontsize="8" fontleading="9.6" />
 	</i:styles>
-	<i:page width="3.5" height="2" pdf="pdftemplates/bc.pdf">
+	<i:page width="3.5" height="2" pdf="pdftemplates/FSUBIZ001.pdf">
 		<i:textblock x="0.7477" y="1.5556" style="school">
-			<i:textline>SCHOOL, REGIONAL CAMPUS OR ENTITY</i:textline>
+			<i:textline><i:var name="school" /></i:textline>
 		</i:textblock>
 		<i:textblock x="0.7477" y="1.25" style="default">
-			<i:textline style="name">Full Name</i:textline>
-			<i:textline style="title">Title</i:textline>
+			<i:textline style="name"><i:var name="name" /></i:textline>
+			<i:textline style="title"><i:var name="title" /></i:textline>
 			<i:blankline />
-			<i:textline>Department or Office</i:textline>
-			<i:textline>Street Address</i:textline>
-			<i:textline>City or Town, MI 00000-0000</i:textline>
+			<i:textline><i:var name="dept" /></i:textline>
+			<i:textline><i:var name="address" /></i:textline>
+			<i:textline><i:var name="csz" /></i:textline>
 			<i:styleline>
 				<i:span style="defaultbold">Phone:</i:span>
-				<i:span style="default"> (000) 000-0000 | </i:span>
+				<i:span style="default"> <i:var name="phone" /> | </i:span>
 				<i:span style="defaultbold">Fax:</i:span>
-				<i:span style="default"> (000) 000-0000</i:span>
+				<i:span style="default"> <i:var name="fax" /></i:span>
 			</i:styleline>
 			<i:styleline>
 				<i:span style="defaultbold">Email:</i:span>
-				<i:span style="default"> name@ferris.edu | </i:span><i:span style="defaultbold">Web:</i:span>
-				<i:span style="default"> www.ferris.edu</i:span>
+				<i:span style="default"> <i:var name="email" /> | </i:span>
+				<i:span style="defaultbold">Web:</i:span>
+				<i:span style="default"> <i:var name="url" /></i:span>
 			</i:styleline>
 		</i:textblock>
 	</i:page>

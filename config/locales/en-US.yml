@@ -8,3 +8,6 @@ en-US:
   variable-data-product-description: "This product allows for customization. Please provide the information requested below. A preview will be generated once you add the item to your cart."
   variable-data-line-item: "This is a customized product. Customization fields:"
   variable-data-generate-preview: "Generate Preview"
+  
+  
+  display-name: "Display Name"
