@@ -65,7 +65,7 @@ class VariableDataProductsExtension < Spree::Extension
           current_item.save
         else
           current_item = LineItem.new(:quantity => quantity)
-          
+          puts variable_fields
           # check to see if it's a variable item, and if so, add the fields to the line item
           if variable_fields != nil
             for field in variable_fields
@@ -94,7 +94,7 @@ class VariableDataProductsExtension < Spree::Extension
     end
     
     OrdersController.class_eval do
-      create.after do
+      create.before do
         variable_fields = []
         
         if params[:variable_fields] != nil

@@ -32,13 +32,41 @@ class PdfGenerator
     #FontFactory.registerDirectory('/System/Library/Fonts/')
     FontFactory.registerDirectory(File.join(RAILS_ROOT, 'lib/fonts')) #fonts should be located here
     
+    
+    context = get_context(output_path, fields)
+
+    # Setup the parser
+    parser = Radius::Parser.new(context, :tag_prefix => 'i')
+    parser.parse(template)
+  end
+  
+  
+  private
+  
+  def get_context(output_path, fields)
+  
     context = Radius::Context.new do |c|
+      # This is the tag for field replacement
       c.define_tag "var" do |tag|
         content = fields[tag.attr['name']]
-        content
+        if(content.nil? || content.empty?)
+          ""
+        else
+          content
+        end
       end
       
+      # creates conditions
+      c.define_tag "if" do |tag|
+        field = tag.attr['name']
+        
+        # Check if the field is empty
+        unless(fields[field].nil? || fields[field].empty?)
+          tag.expand
+        end
+      end
       
+      # basic template setup
       c.define_tag "template" do |tag|
         # initialize anything needed for the template
         tag.locals.doc = Document.new()
@@ -130,7 +158,8 @@ class PdfGenerator
         tag.expand
       end
 
-      c.define_tag "template:page:textblock:styleline:span" do |tag|
+      #c.define_tag "template:page:textblock:styleline:span" do |tag|
+      c.define_tag "span" do |tag|
         style = tag.locals.styles[tag.attr['style']]
         font = FontFactory.getFont(style[:fontname], FontFactory.defaultEncoding, true).getBaseFont()
 
@@ -143,9 +172,8 @@ class PdfGenerator
         tag.locals.canvas.setFontAndSize(tag.locals.font, tag.locals.style[:fontsize])
       end
     end
-
-    # Setup the parser
-    parser = Radius::Parser.new(context, :tag_prefix => 'i')
-    parser.parse(template)
+    
+    context
+  
   end
 end

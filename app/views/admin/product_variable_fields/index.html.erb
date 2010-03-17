@@ -21,11 +21,9 @@
   </table>
 
   <input type="hidden" name="clear_product_variable_fields" value="true">
-
-  <p>
-    <%= f.add_associated_link(icon('add') + ' ' + t("add_product_variable_fields"), @product.product_variable_fields.build, 
-                              {:onclick => "Element.hide('none');", :class => 'iconlink'}) %>
-	</p>
+	<p><%= f.add_associated_link(icon('add') + ' ' + t("add_product_variable_fields"),
+                              @product.product_variable_fields.build, 
+                              {:onclick => "jQuery('#none').hide();", :class => 'iconlink'}) %></p>
 	<%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %>
 	<br/>
   <%= render :partial => 'admin/shared/edit_resource_links' %>

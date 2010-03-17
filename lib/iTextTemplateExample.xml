@@ -5,7 +5,7 @@
 		<i:style name="school" c="0" m="0" y="0" k="100" spot="false" fontname="Avenir" fontsize="8" fontleading="9.6" />
 	</i:styles>
 	<i:page width="3.5" height="2" pdf="pdftemplates/FSUBIZ001.pdf">
-		<i:textblock x="0.7477" y="1.5556" style="school">
+		<i:textblock x="0.7477" y="1.6" style="school">
 			<i:textline><i:var name="school" /></i:textline>
 		</i:textblock>
 		<i:textblock x="0.7477" y="1.25" style="default">
@@ -17,15 +17,21 @@
 			<i:textline><i:var name="csz" /></i:textline>
 			<i:styleline>
 				<i:span style="defaultbold">Phone:</i:span>
-				<i:span style="default"> <i:var name="phone" /> | </i:span>
-				<i:span style="defaultbold">Fax:</i:span>
-				<i:span style="default"> <i:var name="fax" /></i:span>
+				<i:span style="default"> <i:var name="phone" /></i:span>
+				<i:if name="fax">
+					<i:span style="default"> | </i:span>
+					<i:span style="defaultbold">Fax:</i:span>
+					<i:span style="default"> <i:var name="fax" /></i:span>
+				</i:if>
 			</i:styleline>
 			<i:styleline>
 				<i:span style="defaultbold">Email:</i:span>
-				<i:span style="default"> <i:var name="email" /> | </i:span>
-				<i:span style="defaultbold">Web:</i:span>
-				<i:span style="default"> <i:var name="url" /></i:span>
+				<i:span style="default"> <i:var name="email" /></i:span>
+				<i:if name="url">
+					<i:span style="default"> | </i:span>
+					<i:span style="defaultbold">Web:</i:span>
+					<i:span style="default"> <i:var name="url" /></i:span>
+				</i:if>
 			</i:styleline>
 		</i:textblock>
 	</i:page>
