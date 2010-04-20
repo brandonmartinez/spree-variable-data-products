@@ -1,0 +1,9 @@
+<% if @product.has_variable_fields? %>
+	<div id="product-variable-fields">
+		<h2><%= t('variable-data-product') %></h2>
+		<p><%= t('variable-data-product-description') %></p>
+		<% for field in @product.product_variable_fields %>
+		<div><strong><%= field.display_name %>:</strong><br /><%= text_field_tag "variable_fields[#{field.id}]"  %></div>
+		<% end %>
+	</div>
+<% end %>
