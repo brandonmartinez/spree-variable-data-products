@@ -1,0 +1,4 @@
+<% if line_item.has_variable_fields? %>
+	<strong><%= t('variable-data-line-item') %></strong>
+	<%= link_to t("variable-data-generate-preview"), render_proof_order_line_item_url(@order.id, line_item.id), :class => 'renderproof' %>
+<% end %>

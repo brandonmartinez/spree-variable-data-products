@@ -40,6 +40,7 @@ class VariableDataProductsHooks < Spree::ThemeSupport::HookListener
   #   end
   #
 
-
+  insert_after :inside_head, 'shared/styles'
   insert_after :inside_product_cart_form, 'products/cart_form_variables'
+  insert_after :cart_item_description, 'orders/line_item_proof'
 end

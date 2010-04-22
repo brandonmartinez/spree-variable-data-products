@@ -6,7 +6,7 @@ en-US:
   
   variable-data-product: "Product Customization"
   variable-data-product-description: "This product allows for customization. Please provide the information requested below. A preview will be generated once you add the item to your cart."
-  variable-data-line-item: "This is a customized product. Customization fields:"
+  variable-data-line-item: "This is a customized product. Please be sure to generate a preview to check all of your entered data. Once the order is submitting, it is assumed you have proofed your order."
   variable-data-generate-preview: "Generate Preview"
   
   

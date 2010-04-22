@@ -1,0 +1,31 @@
+.renderproof, .renderproof:visited, .renderproof:hover {
+	margin-top: 10px;
+	background: #222;
+	background-image:  -webkit-gradient(linear, left bottom, left top, color-stop(0.18, rgb(34,34,34)), color-stop(0.59, rgb(51,51,51)), color-stop(0.8, rgb(68,68,68)));
+	background-image: -moz-linear-gradient(center bottom, rgb(34,34,34) 18%, rgb(51,51,51) 59%, rgb(68,68,68) 80);
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	line-height: 1;
+	font-size: 14px;
+	padding: 8px 14px 9px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 0 1px 3px #999;
+	-webkit-box-shadow: 0 1px 3px #999;
+	text-shadow: 0 -1px 1px #222;
+	border-bottom: 1px solid #222;
+	position: relative;
+	cursor: pointer;
+	width: 200px;
+	text-align: center;
+}
+
+.renderproof:hover {
+	background: #555;
+}
+
+.renderproof:active {
+	background: #444;
+}
